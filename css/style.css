@@ -1,0 +1,461 @@
+/* Design */
+:root {
+    --page-bg: #ececec;
+    --text: #1a1a2e;
+    --heading: #1a237e;
+    --yellow-1: #f4d03f;
+    --yellow-2: #e6b800;
+    --surface-border: #d8d8d8;
+
+    --content-max: 1200px;
+    --section-pad-desktop: 3rem 2rem;
+    --section-pad-mobile: 2rem 1rem;
+    --gap-lg: 3rem;
+    --gap-sm: 1.5rem;
+
+    --diagonal-width: 40%;
+    --diagonal-cut: 60%;
+
+    --ease: ease;
+    --dur-fast: 0.25s;
+}
+
+/* Reset & Base*/
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--page-bg);
+    overflow-x: hidden;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+section[id] {
+    scroll-margin-top: 80px;
+}
+
+/* Shared Section Layout */
+.hero,
+.about-section,
+.hobbies-section,
+.contact-section {
+    position: relative;
+    overflow: hidden;
+    background: var(--page-bg);
+}
+
+.hero {
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-section,
+.hobbies-section,
+.contact-section {
+    display: flex;
+    align-items: center;
+    padding: var(--section-pad-desktop);
+    margin-top: -1px; /* anti-seam between stacked sections */
+}
+
+.about-section {
+    min-height: 500px;
+}
+
+.hobbies-section {
+    min-height: 600px;
+}
+
+.contact-section {
+    min-height: 420px;
+}
+
+.hero-content,
+.about-content,
+.hobbies-content,
+.contact-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: var(--content-max);
+    margin: 0 auto;
+}
+
+/* Diagonal Backgrounds */
+.diagonal-bg,
+.diagonal-bg-about,
+.diagonal-bg-hobbies,
+.diagonal-bg-contact {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--diagonal-width);
+    height: 100%;
+    background: linear-gradient(135deg, var(--yellow-1) 0%, var(--yellow-2) 100%);
+    z-index: 1;
+}
+
+/* Alternating shapes so section edges visually connect */
+.diagonal-bg,
+.diagonal-bg-hobbies {
+    clip-path: polygon(0 100%, 100% 100%, var(--diagonal-cut) 0, 0 0);
+}
+
+.diagonal-bg-about,
+.diagonal-bg-contact {
+    clip-path: polygon(0 0, 100% 0, var(--diagonal-cut) 100%, 0 100%);
+}
+
+/* Top Menu */
+.top-menu {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(236, 236, 236, 0.95);
+    border-bottom: 1px solid var(--surface-border);
+    padding: 0.75rem 1rem;
+}
+
+.top-menu nav {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.menu-btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--heading);
+    border-radius: 999px;
+    color: var(--heading);
+    text-decoration: none;
+    font-weight: 700;
+    transition:
+        transform var(--dur-fast) var(--ease),
+        background-color var(--dur-fast) var(--ease),
+        color var(--dur-fast) var(--ease),
+        box-shadow var(--dur-fast) var(--ease);
+}
+
+.menu-btn:hover,
+.menu-btn:focus-visible {
+    background: var(--heading);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(26, 35, 126, 0.2);
+}
+
+.menu-btn:active {
+    transform: translateY(0);
+}
+
+/* Hero */
+.hero-content {
+    text-align: center;
+    padding: 3rem;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+.hardhat-icon {
+    width: clamp(120px, 18vw, 280px);
+    margin: 1rem auto;
+}
+
+.name {
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    line-height: 1.08;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--heading);
+    margin: 1rem 0;
+    text-wrap: balance;
+}
+
+.tagline {
+    font-size: clamp(1rem, 2vw, 1.6rem);
+    color: #333;
+}
+
+/* About */
+.about-content {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-lg);
+}
+
+.about-image {
+    flex-shrink: 0;
+}
+
+.about-image img {
+    width: min(700px, 45vw);
+    object-fit: cover;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.about-text h2,
+.hobbies-text h2,
+.contact-info h2 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--heading);
+    margin-bottom: 1.5rem;
+}
+
+.about-text > p.type-on-view {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+.fun-fact-card {
+    margin-top: 1.5rem;
+    max-width: 34rem;
+}
+
+.fun-fact-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.25rem;
+    border: 2px solid var(--heading);
+    border-radius: 999px;
+    background: var(--yellow-1);
+    color: var(--heading);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        transform var(--dur-fast) var(--ease),
+        box-shadow var(--dur-fast) var(--ease),
+        background-color var(--dur-fast) var(--ease);
+}
+
+.fun-fact-btn:hover,
+.fun-fact-btn:focus-visible {
+    background: var(--yellow-2);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(26, 35, 126, 0.18);
+}
+
+.fun-fact-btn:active {
+    transform: translateY(0);
+}
+
+.fun-fact-display {
+    margin-top: 0.9rem;
+    padding: 1rem 1.1rem;
+    border-left: 4px solid var(--heading);
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.7;
+    opacity: 0.88;
+    transform: translateY(6px);
+    transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+
+.fun-fact-display.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hobbies */
+.hobbies-content {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-lg);
+}
+
+.hobbies-text {
+    flex: 1;
+}
+
+.hobbies-list {
+    list-style: none;
+}
+
+.hobbies-list li {
+    margin-bottom: 2rem;
+}
+
+.hobbies-list h3 {
+    font-size: 1.3rem;
+    color: var(--heading);
+    margin-bottom: 0.5rem;
+}
+
+.hobbies-list p {
+    font-size: 1rem;
+    font-style: italic;
+    color: #333;
+    line-height: 1.6;
+}
+
+.hobbies-images {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.hobby-img-1,
+.hobby-img-2 {
+    width: min(420px, 32vw);
+    object-fit: cover;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Contact */
+.contact-content {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-lg);
+}
+
+.phone-icon {
+    flex-shrink: 0;
+}
+
+.phone-icon img {
+    width: min(380px, 30vw);
+    filter: none;
+}
+
+.contact-info p {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.8;
+}
+
+.contact-info a {
+    color: var(--heading);
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Hover Effects */
+.hardhat-icon,
+.about-image img,
+.hobby-img-1,
+.hobby-img-2,
+.phone-icon img {
+    transition:
+        transform var(--dur-fast) var(--ease),
+        box-shadow var(--dur-fast) var(--ease),
+        filter var(--dur-fast) var(--ease);
+}
+
+.hardhat-icon:hover,
+.phone-icon img:hover {
+    transform: translateY(-3px) scale(1.02);
+}
+
+.about-image img:hover,
+.hobby-img-1:hover,
+.hobby-img-2:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+}
+
+/* Typing Effect */
+.type-on-view {
+    display: inline-block;
+    border-right: 2px solid var(--heading);
+}
+
+.type-on-view.is-typing {
+    animation: cursor-blink 0.7s step-end infinite;
+}
+
+.type-on-view.is-done {
+    border-right-color: transparent;
+    animation: none;
+}
+
+@keyframes cursor-blink {
+    50% {
+        border-right-color: transparent;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    :root {
+        --diagonal-width: 100%;
+        --diagonal-cut: 75%;
+    }
+
+    .hero {
+        min-height: 340px;
+    }
+
+    .about-section,
+    .hobbies-section,
+    .contact-section {
+        min-height: auto;
+        padding: var(--section-pad-mobile);
+    }
+
+    .about-content,
+    .hobbies-content,
+    .contact-content {
+        flex-direction: column;
+        gap: var(--gap-sm);
+    }
+
+    .hero-content {
+        text-align: left;
+        padding: 2rem 1rem;
+    }
+
+    .subtitle,
+    .tagline {
+        text-align: left;
+    }
+
+    .hardhat-icon {
+        margin: 1rem 0;
+    }
+
+    .about-image img,
+    .hobby-img-1,
+    .hobby-img-2,
+    .phone-icon img {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .fun-fact-card {
+        max-width: 100%;
+    }
+}
