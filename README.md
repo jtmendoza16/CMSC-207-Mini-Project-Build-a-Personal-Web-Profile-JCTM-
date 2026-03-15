@@ -29,6 +29,156 @@ I am an electrical engineer and currently working as an Asset Health Analytics E
 - Responsive layout for desktop and mobile
 - Random fun fact button in the About Me and Hobbies sections
 
+## Core code snippets I used
+
+These are just short snippets from the actual code I used for each feature.
+
+### Navigation menu and smooth scrolling
+
+```html
+<nav aria-label="Main navigation">
+	<a class="menu-btn" href="#home">Home</a>
+	<a class="menu-btn" href="#about">About</a>
+	<a class="menu-btn" href="#hobbies">Hobbies</a>
+	<a class="menu-btn" href="#contact">Contact</a>
+</nav>
+```
+
+```js
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+	anchor.addEventListener('click', function (e) {
+		e.preventDefault();
+		const target = document.querySelector(this.getAttribute('href'));
+		if (target) {
+			target.scrollIntoView({
+				behavior: 'smooth',
+				block: 'start'
+			});
+		}
+	});
+});
+```
+
+### Hover effects
+
+```css
+.menu-btn:hover,
+.menu-btn:focus-visible {
+	background: var(--heading);
+	color: #fff;
+	transform: translateY(-1px);
+	box-shadow: 0 8px 18px rgba(26, 35, 126, 0.2);
+}
+
+.about-image img:hover,
+.hobby-img-1:hover,
+.hobby-img-2:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+}
+```
+
+### Typewriter effect
+
+```html
+<p class="tagline type-on-view" data-speed="20">
+	Electrical Engineer | Asset Health Analytics Engineer
+</p>
+```
+
+```js
+function runTypewriter(el) {
+	const fullText = (el.dataset.fullText || el.textContent).trim();
+	const speed = parseInt(el.dataset.speed || "25", 10);
+
+	el.dataset.fullText = fullText;
+	el.textContent = "";
+
+	let i = 0;
+	const timer = setInterval(() => {
+		el.textContent += fullText.charAt(i);
+		i += 1;
+
+		if (i >= fullText.length) {
+			clearInterval(timer);
+		}
+	}, speed);
+}
+```
+
+### Scroll animation
+
+```js
+const observer = new IntersectionObserver((entries) => {
+	entries.forEach(entry => {
+		if (entry.isIntersecting) {
+			entry.target.style.opacity = '1';
+			entry.target.style.transform = 'translateY(0)';
+		} else {
+			entry.target.style.opacity = '0';
+			entry.target.style.transform = 'translateY(20px)';
+		}
+	});
+}, observerOptions);
+
+document.querySelectorAll('section').forEach(section => {
+	section.style.opacity = '0';
+	section.style.transform = 'translateY(20px)';
+	observer.observe(section);
+});
+```
+
+### Responsive layout
+
+```css
+@media (max-width: 768px) {
+	.about-content,
+	.hobbies-content,
+	.contact-content {
+		flex-direction: column;
+		gap: var(--gap-sm);
+	}
+
+	.about-image img,
+	.hobby-img-1,
+	.hobby-img-2,
+	.phone-icon img {
+		width: 100%;
+		max-width: 320px;
+	}
+}
+```
+
+### Random fun fact button
+
+```html
+<button class="fun-fact-btn" type="button" data-fact-target="about-fact">
+	Show a Fun Fact
+</button>
+<p class="fun-fact-display" id="about-fact" aria-live="polite">
+	Click the button to reveal a random fun fact.
+</p>
+```
+
+```js
+const funFacts = [
+	"I used to be a school model when I was in elementary :D",
+	"I am an innovator, champion in Aboitiz Power's innovation for process improvement.",
+	"I am a bird lover! I have a cockatiel named Eddie.",
+	"Big Ed Sheeran fan."
+];
+
+document.querySelectorAll(".fun-fact-btn").forEach((button) => {
+	button.addEventListener("click", () => {
+		const targetId = button.dataset.factTarget;
+		const factDisplay = document.getElementById(targetId);
+		const randomIndex = Math.floor(Math.random() * funFacts.length);
+
+		factDisplay.textContent = funFacts[randomIndex];
+	});
+});
+```
+
 ## Project structure
 
 ```text
